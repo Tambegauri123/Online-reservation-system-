@@ -1,0 +1,100 @@
+import java.util.Scanner;
+
+class User {
+    private String username;
+    private String password;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public boolean authenticate(String username, String password) {
+        return this.username.equals(username) && this.password.equals(password);
+    }
+}
+
+class ReservationSystem {
+    private String trainNumber;
+    private String trainName;
+    private String classType;
+    private String dateOfJourney;
+    private String from;
+    private String to;
+
+    public ReservationSystem(String trainNumber, String trainName) {
+        this.trainNumber = trainNumber;
+        this.trainName = trainName;
+    }
+
+    public void fillReservationDetails(String classType, String dateOfJourney, String from, String to) {
+        this.classType = classType;
+        this.dateOfJourney = dateOfJourney;
+        this.from = from;
+        this.to = to;
+    }
+
+    public void displayReservationDetails() {
+        System.out.println("Train Number: " + trainNumber);
+        System.out.println("Train Name: " + trainName);
+        System.out.println("Class Type: " + classType);
+        System.out.println("Date of Journey: " + dateOfJourney);
+        System.out.println("From: " + from);
+        System.out.println("To: " + to);
+    }
+}
+
+public class OnlineReservationSystem {
+    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "password";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Online Reservation System");
+
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        User user = new User(USERNAME, PASSWORD);
+        if (!user.authenticate(username, password)) {
+            System.out.println("Invalid username or password. Exiting...");
+            return;
+        }
+
+        System.out.println("Login successful!");
+
+        ReservationSystem reservationSystem = new ReservationSystem("12345", "Express");
+
+        System.out.println("Reservation Form");
+        System.out.print("Enter class type: ");
+        String classType = scanner.nextLine();
+        System.out.print("Enter date of journey: ");
+        String dateOfJourney = scanner.nextLine();
+        System.out.print("Enter from: ");
+        String from = scanner.nextLine();
+        System.out.print("Enter to: ");
+        String to = scanner.nextLine();
+
+        reservationSystem.fillReservationDetails(classType, dateOfJourney, from, to);
+        System.out.println("Reservation Details:");
+        reservationSystem.displayReservationDetails();
+
+        // Cancellation Form
+        System.out.println("Cancellation Form");
+        System.out.print("Enter PNR number: ");
+        String pnrNumber = scanner.nextLine();
+        System.out.println("PNR Number: " + pnrNumber);
+        System.out.println("Are you sure you want to cancel? Press OK to confirm.");
+
+        String confirmation = scanner.nextLine();
+        if (confirmation.equalsIgnoreCase("OK")) {
+            System.out.println("Ticket with PNR number " + pnrNumber + " cancelled successfully.");
+        } else {
+            System.out.println("Cancellation aborted.");
+        }
+
+        scanner.close();
+    }
+}
